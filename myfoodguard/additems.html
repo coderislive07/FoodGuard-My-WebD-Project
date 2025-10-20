@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+      <link rel="stylesheet" href="index.css">
+</head>
+<body>
+       <nav class="navbar">
+        <div class="logo">🥦 FoodGuard</div>
+          <div class="hamburger" id="hamburger">
+    ☰
+  </div>
+        <ul class="nav-links">
+            <li><a href="index.html" >🏠 Home</a></li>
+      <li><a href="additems.html" class="active">➕ Add Item</a></li>
+      <li><a href="all_items.html">📋 All Items</a></li>
+      <li><a href="settings.html">⚙️ Settings</a></li>
+        <div class="notification-bell" id="notificationBell">
+    🔔
+    <span class="notif-count">0</span>
+  </div>
+        </ul>
+        
+    </nav>
+    <section class="add-item-section">
+  <h1>Add / Edit Food Item</h1>
+  <form class="add-item-form" id="addItemForm">
+    <div class="form-group">
+      <label for="itemName">Item Name</label>
+      <input type="text" id="itemName" placeholder="e.g., Milk, Apples, Cheese" required />
+    </div>
+
+    <div class="form-group">
+      <label for="category">Category</label>
+      <select id="category" required>
+        <option value="">Select Category</option>
+        <option value="fruits">🍎 Fruits</option>
+        <option value="vegetables">🥕 Vegetables</option>
+        <option value="dairy">🥛 Dairy</option>
+        <option value="meat">🍗 Meat</option>
+        <option value="beverages">🥤 Beverages</option>
+        <option value="others">🍽 Others</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="quantity">Quantity</label>
+      <input type="number" id="quantity" min="1" placeholder="e.g., 2" required />
+    </div>
+
+    <div class="form-group">
+      <label for="expiryDate">Expiry Date</label>
+      <input type="date" id="expiryDate" required />
+    </div>
+
+    <div class="form-group">
+      <label for="status">Status</label>
+      <select id="status">
+        <option value="fresh">🟢 Fresh</option>
+        <option value="near_expiry">🟡 Near Expiry</option>
+        <option value="expired">🔴 Expired</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="notes">Notes (optional)</label>
+      <textarea id="notes" placeholder="Add notes or storage tips..."></textarea>
+    </div>
+
+    <button type="submit" class="btn-submit">Save Item</button>
+  </form>
+</section>
+<!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>FoodGuard</h4>
+                <p>Your smart companion for managing food and reducing waste.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="add.html">Add Item</a></li>
+                    <li><a href="items.html">All Items</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>Email: info@FoodGuard.com</p>
+                <p>Phone: +1 (555) 123-4567</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Fridge Tracker. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
