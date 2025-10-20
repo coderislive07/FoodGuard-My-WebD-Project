@@ -8,14 +8,14 @@
 </head>
 <body>
        <nav class="navbar">
-        <div class="logo">🥦 FoodGuard</div>
+            <a href = "index.html"> <div class="logo">🥦 FoodGuard</div></a>
           <div class="hamburger" id="hamburger">
     ☰
   </div>
         <ul class="nav-links">
             <li><a href="index.html" >🏠 Home</a></li>
       <li><a href="additems.html" class="active">➕ Add Item</a></li>
-      <li><a href="all_items.html">📋 All Items</a></li>
+      <li><a href="allitems.html">📋 All Items</a></li>
       <li><a href="settings.html">⚙️ Settings</a></li>
         <div class="notification-bell" id="notificationBell">
     🔔
@@ -94,9 +94,34 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 Fridge Tracker. All rights reserved.</p>
+            <p>&copy; 2025 FoodGuard All rights reserved.</p>
         </div>
     </footer>
-
+    <script>
+    const itemName = document.getElementById('itemName');
+    const category = document.getElementById('category');
+    const quantity = document.getElementById('quantity');
+    const expiryDate = document.getElementById('expiryDate');
+    const status = document.getElementById('status');
+    const notes = document.getElementById('notes');
+    const addItemForm = document.getElementById('addItemForm');
+    addItemForm.addEventListener('submit' , function(event) {
+      event.preventDefault();
+      const newItem = {
+        id: Date.now(),
+        name: itemName.value,
+        category: category.value,
+        quantity: parseInt(quantity.value),
+        expiryDate: expiryDate.value,
+        status: status.value,
+        notes: notes.value
+      };
+      let items = JSON.parse(localStorage.getItem('foodItems')) || [];
+      items.push(newItem);
+      localStorage.setItem('foodItems', JSON.stringify(items));
+      alert('Item added successfully!');
+      addItemForm.reset();
+    });
+    </script>
 </body>
 </html>

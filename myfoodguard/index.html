@@ -9,14 +9,14 @@
 <body>
     <!-- Navbar  -->
     <nav class="navbar">
-        <div class="logo">🥦 FoodGuard</div>
+       <a href = "index.html"> <div class="logo">🥦 FoodGuard</div></a>
           <div class="hamburger" id="hamburger">
     ☰
   </div>
         <ul class="nav-links">
             <li><a href="index.html" class="active">🏠 Home</a></li>
       <li><a href="additems.html">➕ Add Item</a></li>
-      <li><a href="all_items.html">📋 All Items</a></li>
+      <li><a href="allitems.html">📋 All Items</a></li>
       <li><a href="settings.html">⚙️ Settings</a></li>
         <div class="notification-bell" id="notificationBell">
     🔔
@@ -104,10 +104,43 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 Fridge Tracker. All rights reserved.</p>
+            <p>&copy; 2025 FoodGuard All rights reserved.</p>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        function updateDashboardCards() {
+    const items = JSON.parse(localStorage.getItem('foodItems')) || [];
+
+    let total = items.length;
+    let expiringSoon = 0;
+    let expired = 0;
+
+    const currentDate = new Date();
+
+    items.forEach(item=>
+        {
+            const expiryDate = new Date(item.expiryDate);
+            const timeDiff = expiryDate - currentDate;
+            const daysDiff = timeDiff / (1000 * 60 * 60 * 24);
+
+            if (expiryDate < currentDate) {
+                expired++;
+            } else if (daysDiff <= 3) {
+                expiringSoon++;
+            }
+        }
+    )
+
+    // Update HTML
+    document.getElementById('total-items').innerText = total;
+    document.getElementById('expiring-soon').innerText = expiringSoon;
+    document.getElementById('expired-items').innerText = expired;
+}
+
+// Call this on page load
+window.onload = updateDashboardCards;
+
+    </script>
 </body>
 </html>
