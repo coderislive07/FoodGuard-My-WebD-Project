@@ -98,9 +98,10 @@
         </div>
     </footer>
     <script>
-              if(localStorage.getItem('isLoggedIn') !== 'true') {
+          const loggedInUser = localStorage.getItem('isLoggedIn').trim();
+        if(!loggedInUser) {
         window.location.href = "index.html";
-    }
+        }
     const itemName = document.getElementById('itemName');
  
     
@@ -122,8 +123,16 @@
         itemName.value="";
         return;
          }
-
-        let items = JSON.parse(localStorage.getItem('foodItems')) || [];
+        const userData = JSON.parse(localStorage.getItem(loggedInUser));
+        if (!userData) {
+            alert("Error: User data not found. Please log in again.");
+            window.location.href = "index.html"; 
+            return; 
+        }
+        if(!Array.isArray(userData.foods)){
+            userData.foods = [];
+        }
+        const items = userData.foods;
         // check for duplicates item names 
         for(let i=0;i<items.length;i++){
             if(items[i].name.toLowerCase()===itemName.value.toLowerCase()){
@@ -144,8 +153,8 @@
         notes: notes.value
       };
    
-      items.push(newItem);
-      localStorage.setItem('foodItems', JSON.stringify(items));
+      userData.foods.push(newItem);
+      localStorage.setItem(loggedInUser, JSON.stringify(userData));
       alert('Item added successfully!');
       addItemForm.reset();
     });

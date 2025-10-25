@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings | FoodGuard</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #f5f7fa 0%, #f0f4f8 100%);
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav.navbar {
+      background-color: #2e7d32;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(46, 125, 50, 0.15);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 3rem 2rem;
+      max-width: 700px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: #1b5e20;
+      font-weight: 700;
+    }
+
+    p.subtitle {
+      color: #666;
+      margin-bottom: 2rem;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    section {
+      background-color: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      transition: box-shadow 0.3s ease;
+    }
+
+    section:hover {
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    label {
+      display: block;
+      margin-top: 1.5rem;
+      font-weight: 600;
+      color: #333;
+      font-size: 0.95rem;
+    }
+
+    input {
+      width: 100%;
+      margin-top: 0.5rem;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      outline: none;
+      transition: all 0.3s ease;
+      font-family: "Poppins", sans-serif;
+    }
+
+    input:focus {
+      border-color: #2e7d32;
+      box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+      background-color: #f9fff9;
+    }
+
+    button {
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.875rem 1.75rem;
+      font-size: 1rem;
+      margin-top: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
+    }
+
+    button:hover {
+      background-color: #256628;
+      box-shadow: 0 6px 16px rgba(46, 125, 50, 0.3);
+      transform: translateY(-2px);
+    }
+
+    #logoutBtn {
+      background-color: #d32f2f;
+      box-shadow: 0 4px 12px rgba(211, 47, 47, 0.2);
+    }
+
+    #logoutBtn:hover {
+      background-color: #b71c1c;
+      box-shadow: 0 6px 16px rgba(211, 47, 47, 0.3);
+    }
+
+    .msg {
+      margin-top: 1rem;
+      color: #2e7d32;
+      font-weight: 600;
+      font-size: 0.95rem;
+      animation: slideIn 0.3s ease;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #999;
+      font-size: 0.9rem;
+      border-top: 1px solid #e0e0e0;
+      margin-top: auto;
+      background-color: #fafafa;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="home.html" class="logo">🥦 FoodGuard</a>
+  </nav>
+
+  <main>
+    <h2>Account Settings</h2>
+    <p class="subtitle">Manage your account details and update your information.</p>
+
+    <section>
+      <form id="settingsForm">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" placeholder="Enter your full name" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password" required>
+
+        <button type="submit">Save Changes</button>
+        <p class="msg" id="msg"></p>
+      </form>
+    </section>
+
+    <section>
+      <button id="logoutBtn">Logout</button>
+    </section>
+  </main>
+
+  <footer>© 2025 FoodGuard | All rights reserved.</footer>
+
+  <script>
+    const nameInput = document.getElementById("name");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const msg = document.getElementById("msg");
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    // Get logged in user email
+    let loggedInUser =localStorage.getItem("isLoggedIn");
+
+    if (!loggedInUser) {
+      window.location.href = "index.html";
+    }
+
+    // Load user data safely
+    const savedUserRaw = localStorage.getItem(loggedInUser);
+    let savedUser = {};
+
+    try {
+      savedUser = savedUserRaw ? JSON.parse(savedUserRaw) : {};
+    } catch {
+      savedUser = {};
+    }
+
+    if (savedUser && savedUser.email) {
+      nameInput.value = savedUser.name || "";
+      emailInput.value = savedUser.email || "";
+      passwordInput.value = savedUser.password || "";
+    }
+
+    // Save changes
+    document.getElementById("settingsForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const updatedUser = {
+        name: nameInput.value.trim(),
+        email: emailInput.value.trim(),
+        password: passwordInput.value.trim(),
+        foods: savedUser.foods || [],
+      };
+
+      // Save to new key
+      localStorage.setItem(updatedUser.email, JSON.stringify(updatedUser));
+
+      // If user changed email
+      if (updatedUser.email != loggedInUser) {
+        localStorage.removeItem(loggedInUser);
+        localStorage.setItem("isLoggedIn", JSON.stringify(updatedUser.email));
+        loggedInUser = updatedUser.email;
+      }
+
+      msg.textContent = "✅ Changes saved successfully!";
+    //   reset form 
+        setTimeout(() => {
+            msg.textContent = "";
+        }, 3000);
+    });
+
+
+    // Logout
+    logoutBtn.addEventListener("click", () => {
+      localStorage.removeItem("isLoggedIn");
+      window.location.href = "index.html";
+    });
+  </script>
+
+</body>
+</html>

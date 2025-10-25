@@ -30,9 +30,12 @@
 
     <script>
         <!-- if user is not logged in show login form else redirect to home page -->
-     if(localStorage.getItem('isLoggedIn') === 'true') {
+      
+        const loggedInUser = localStorage.getItem('isLoggedIn');
+        if(loggedInUser) {
         window.location.href = "home.html";
-    }
+        }
+
         const loginForm = document.getElementById('loginForm');
 
         loginForm.addEventListener('submit', function(e) {
@@ -55,7 +58,7 @@
 
             alert(`Welcome back, ${user.name}!`);
             // Redirect to home page
-            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('isLoggedIn',email );
             window.location.href = "home.html";
         });
     </script>

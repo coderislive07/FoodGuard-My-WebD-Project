@@ -89,9 +89,10 @@
         </div>
     </footer>
 <script>
-            if(localStorage.getItem('isLoggedIn') !== 'true') {
+           const loggedInUser = localStorage.getItem('isLoggedIn');
+        if(!loggedInUser) {
         window.location.href = "index.html";
-    }
+        }
     // delete function 
     function deleteItem(index)
     {
@@ -107,9 +108,10 @@
     function editItem(index)
     {
         const dialog = document.getElementById('editDialog');
-        const items = JSON.parse(localStorage.getItem('foodItems')) || [];
+        const email = loggedInUser;
+        const userData = JSON.parse(localStorage.getItem(email));
+        const items = userData.foods;
         const item = items[index];
-
         document.getElementById('editName').value = item.name;
         document.getElementById('editQuantity').value = item.quantity;
         document.getElementById('editExpiry').value = item.expiryDate;
@@ -121,7 +123,8 @@
             item.quantity = document.getElementById('editQuantity').value;
             item.expiryDate = document.getElementById('editExpiry').value;
             item.category = document.getElementById('editCategory').value;
-            localStorage.setItem('foodItems', JSON.stringify(items));
+            localStorage.setItem(email, JSON.stringify(userData));
+            alert("Item updated successfully!");
             dialog.style.display = 'none';
             loadAllItems();
         };
@@ -135,8 +138,9 @@
     function loadAllItems() {
         const itemsContainer = document.getElementById('itemsContainer');
         itemsContainer.innerHTML = '';
-
-        const items = JSON.parse(localStorage.getItem('foodItems')) || [];
+        const email = loggedInUser;
+        const userData = JSON.parse(localStorage.getItem(email));
+        const items = userData.foods;
 
         if (items.length === 0) {
             itemsContainer.innerHTML = '<p>No food items added yet.</p>';

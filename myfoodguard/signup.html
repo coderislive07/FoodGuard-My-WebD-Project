@@ -31,9 +31,10 @@
 
     <script>
                <!-- if user is not logged in show login form else redirect to home page -->
-     if(localStorage.getItem('isLoggedIn') === 'true') {
+      const loggedInUser = localStorage.getItem('isLoggedIn');
+        if(loggedInUser) {
         window.location.href = "home.html";
-    }
+        }
         const form = document.getElementById('signupForm');
 
         form.addEventListener('submit', function(e) {
@@ -66,10 +67,15 @@
             }
 
             // Save to localStorage
-            const user = { name, email, password };
+            const user = { 
+                name: name,
+                email: email,
+                password: password,
+                foods: []
+            };
             localStorage.setItem(email, JSON.stringify(user));
             // save a global state whether user is now logged in or not
-            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('isLoggedIn', email);
             alert("Signup successful! Please login.");
             window.location.href = "home.html";
         });
