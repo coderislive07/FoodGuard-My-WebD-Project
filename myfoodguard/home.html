@@ -5,26 +5,95 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FoodGuard - Reduce Food Waste</title>
     <link rel="stylesheet" href="index.css">
+    <style>
+        /* Minimal styling for modal */
+        .notification-modal {
+            display: none;
+            position: fixed;
+            z-index: 200;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .notification-modal-content {
+            background: #fff;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 90%;
+            max-height: 80%;
+            overflow-y: auto;
+            position: relative;
+        }
+        .notification-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .notification-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+            padding: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        .notification-content h4 {
+            margin: 0;
+            font-size: 1rem;
+        }
+        .notification-content p {
+            margin: 0.2rem 0 0 0;
+            font-size: 0.85rem;
+            color: #555;
+        }
+        .notification-close {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #d32f2f;
+        }
+    </style>
 </head>
 <body>
 
     <!-- Navbar  -->
     <nav class="navbar">
-       <a href = "home.html"> <div class="logo">🥦 FoodGuard</div></a>
-          <div class="hamburger" id="hamburger">
-    ☰
-  </div>
-        <ul class="nav-links">
+       <a href="home.html" class="logo">🥦 FoodGuard</a>
+       <ul class="nav-links">
             <li><a href="index.html" class="active">🏠 Home</a></li>
-      <li><a href="additems.html">➕ Add Item</a></li>
-      <li><a href="allitems.html">📋 All Items</a></li>
-      <li><a href="settings.html">⚙️ Settings</a></li>
-        <div style="cursor: pointer;" class="notification-bell" id="notificationBell">
-    🔔
-    <span class="notif-count">0</span>
-  </div>
-        </ul>    
+            <li><a href="additems.html">➕ Add Item</a></li>
+            <li><a href="allitems.html">📋 All Items</a></li>
+            <li><a href="settings.html">⚙️ Settings</a></li>
+            <div style="cursor: pointer;" class="notification-bell" id="notificationBell">
+                🔔 <span class="notif-count" id="notif-count">0</span>
+            </div>
+       </ul>    
     </nav>
+
+    <!-- Notification modal -->
+    <div class="notification-modal" id="notificationModal">
+        <div class="notification-modal-content">
+            <div class="notification-modal-header">
+                <h3>Expiring Soon Items</h3>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="notification-list" id="notificationList">
+                <p class="no-notifications">No items expiring soon. Your fridge is fresh!</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
@@ -36,7 +105,8 @@
             <img src="https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=600&h=400&fit=crop" alt="Fresh vegetables in a fridge">
         </div>
     </section>
-    <!-- Statistics Section -->
+
+    <!-- Stats Section -->
     <section class="stats-section">
         <h2>Your Fridge Status</h2>
         <div class="stats-container">
@@ -57,85 +127,113 @@
             </div>
         </div>
     </section>
-    <!-- Features Section -->
-    <section class="features-section">
-        <h2>Why Use Fridge Tracker?</h2>
-        <div class="features-container">
-            <div class="feature-card">
-                <div class="feature-icon">💾</div>
-                <h3>Local Storage</h3>
-                <p>Your data is saved locally on your device. No cloud needed, complete privacy.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🔔</div>
-                <h3>Smart Alerts</h3>
-                <p>Get notified when items are expiring soon or already expired.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">♻️</div>
-                <h3>Reduce Waste</h3>
-                <p>Plan your meals better and reduce food waste in your household.</p>
-            </div>
-        </div>
-    </section>
+
     <!-- Footer -->
     <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>FoodGuard</h4>
-                <p>Your smart companion for managing food and reducing waste.</p>
-            </div>
-            <div class="footer-section">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="add.html">Add Item</a></li>
-                    <li><a href="items.html">All Items</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Contact</h4>
-                <p>Email: info@FoodGuard.com</p>
-                <p>Phone: +1 (555) 123-4567</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 FoodGuard All rights reserved.</p>
-        </div>
+        <p>&copy; 2025 FoodGuard All rights reserved.</p>
     </footer>
+
     <script>
-          const loggedInUser = localStorage.getItem('isLoggedIn');
-        if(!loggedInUser) {
-        window.location.href = "index.html";
-        }
+        const loggedInUser = localStorage.getItem('isLoggedIn');
+        if (!loggedInUser) window.location.href = "index.html";
+
+        // Update dashboard stats
         function updateDashboardCards() {
-    const items = JSON.parse(localStorage.getItem('foodItems')) || [];
+            const userData = JSON.parse(localStorage.getItem(loggedInUser)) || {};
+            const items = userData.foods || [];
+            const currentDate = new Date();
+            let total = items.length, expiringSoon = 0, expired = 0;
 
-    let total = items.length;
-    let expiringSoon = 0;
-    let expired = 0;
+            items.forEach(item => {
+                const expiryDate = new Date(item.expiryDate);
+                const daysDiff = (expiryDate - currentDate) / (1000 * 60 * 60 * 24);
 
-    const currentDate = new Date();
+                if (expiryDate < currentDate) expired++;
+                else if (daysDiff <= 3) expiringSoon++;
+            });
 
-    items.forEach(item=>
-        {
-            const expiryDate = new Date(item.expiryDate);
-            const timeDiff = expiryDate - currentDate;
-            const daysDiff = timeDiff / (1000 * 60 * 60 * 24);
+            document.getElementById('total-items').innerText = total;
+            document.getElementById('expiring-soon').innerText = expiringSoon;
+            document.getElementById('expired-items').innerText = expired;
 
-            if (expiryDate < currentDate) {
-                expired++;
-            } else if (daysDiff <= 3) {
-                expiringSoon++;
-            }
+            updateNotificationCount();
         }
-    ) 
-    document.getElementById('total-items').innerText = total;
-    document.getElementById('expiring-soon').innerText = expiringSoon;
-    document.getElementById('expired-items').innerText = expired;
-}
-// Call this on page load
-window.onload = updateDashboardCards;
+
+        // Get expiring items ignoring dismissed ones
+        function getExpiringItems() {
+            const userData = JSON.parse(localStorage.getItem(loggedInUser)) || {};
+            const items = userData.foods || [];
+            const currentDate = new Date();
+            const dismissed = JSON.parse(localStorage.getItem(loggedInUser + '_dismissed')) || [];
+            const expiringItems = [];
+
+            items.forEach(item => {
+                const expiryDate = new Date(item.expiryDate);
+                const daysDiff = (expiryDate - currentDate) / (1000 * 60 * 60 * 24);
+
+                if (daysDiff > 0 && daysDiff <= 3 && !dismissed.includes(item.name)) {
+                    expiringItems.push({...item, daysLeft: Math.ceil(daysDiff)});
+                }
+            });
+
+            return expiringItems.sort((a, b) => a.daysLeft - b.daysLeft);
+        }
+
+        function updateNotificationCount() {
+            const expiringItems = getExpiringItems();
+            document.getElementById('notif-count').innerText = expiringItems.length;
+        }
+
+        function displayNotifications() {
+            const expiringItems = getExpiringItems();
+            const notificationList = document.getElementById('notificationList');
+
+            if (expiringItems.length === 0) {
+                notificationList.innerHTML = '<p class="no-notifications">No items expiring soon. Your fridge is fresh!</p>';
+                return;
+            }
+
+            notificationList.innerHTML = expiringItems.map((item, index) => `
+                <div class="notification-item">
+                    <div class="notification-content">
+                        <h4>${item.name}</h4>
+                        <p class="notification-message">Eat this item before expiry!</p>
+                        <p class="notification-date">Expires in ${item.daysLeft} day${item.daysLeft > 1 ? 's' : ''} (${new Date(item.expiryDate).toLocaleDateString()})</p>
+                    </div>
+                    <button class="notification-close" onclick="dismissNotification(${index})">&times;</button>
+                </div>
+            `).join('');
+        }
+
+        function dismissNotification(index) {
+            const expiringItems = getExpiringItems();
+            if (!expiringItems[index]) return;
+
+            const dismissedKey = loggedInUser + '_dismissed';
+            let dismissed = JSON.parse(localStorage.getItem(dismissedKey)) || [];
+            dismissed.push(expiringItems[index].name);
+            localStorage.setItem(dismissedKey, JSON.stringify(dismissed));
+
+            displayNotifications(); // update modal
+            updateNotificationCount();
+        }
+
+        document.getElementById('notificationBell').addEventListener('click', () => {
+            document.getElementById('notificationModal').style.display = 'flex';
+            displayNotifications();
+        });
+
+        document.getElementById('closeModal').addEventListener('click', () => {
+            document.getElementById('notificationModal').style.display = 'none';
+        });
+
+        window.addEventListener('click', (event) => {
+            const modal = document.getElementById('notificationModal');
+            if (event.target === modal) modal.style.display = 'none';
+        });
+
+        // Load on page load
+        window.onload = updateDashboardCards;
     </script>
 </body>
 </html>
