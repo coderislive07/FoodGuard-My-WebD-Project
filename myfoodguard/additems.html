@@ -99,14 +99,38 @@
     </footer>
     <script>
     const itemName = document.getElementById('itemName');
+ 
+    
     const category = document.getElementById('category');
     const quantity = document.getElementById('quantity');
+    quantity.max = 1000; // set maximum quantity to 1000
     const expiryDate = document.getElementById('expiryDate');
+    // dont let user  choose the expiry date before current day 
+      expiryDate.min = new Date().toISOString().split("T")[0];
     const status = document.getElementById('status');
     const notes = document.getElementById('notes');
     const addItemForm = document.getElementById('addItemForm');
+
+    // check for inputs other than letters and spaces in the item name 
     addItemForm.addEventListener('submit' , function(event) {
-      event.preventDefault();
+            event.preventDefault();
+         if(/^[A-Za-z\s]+$/.test(itemName.value)===false){
+        alert("Item name should only contain letters and spaces.");
+        itemName.value="";
+        return;
+         }
+
+        let items = JSON.parse(localStorage.getItem('foodItems')) || [];
+        // check for duplicates item names 
+        for(let i=0;i<items.length;i++){
+            if(items[i].name.toLowerCase()===itemName.value.toLowerCase()){
+                alert("Item with this name already exists.");
+                itemName.value="";
+                return;
+            }
+        }
+    
+
       const newItem = {
         id: Date.now(),
         name: itemName.value,
@@ -116,7 +140,7 @@
         status: status.value,
         notes: notes.value
       };
-      let items = JSON.parse(localStorage.getItem('foodItems')) || [];
+   
       items.push(newItem);
       localStorage.setItem('foodItems', JSON.stringify(items));
       alert('Item added successfully!');
