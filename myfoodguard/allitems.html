@@ -30,6 +30,37 @@
         <!-- Food items will be dynamically loaded here -->
    
     </div>  
+    <!-- edit function modal box  -->
+     <!-- Edit Item Dialog -->
+<div id="editDialog" class="dialog" role="dialog" aria-modal="true" aria-labelledby="editDialogTitle">
+  <div class="dialog-content">
+    <h3>Edit Item</h3>
+    <label for="editName">Item Name:</label>
+    <input type="text" id="editName" />
+
+    <label for="editQuantity">Quantity:</label>
+    <input type="number" id="editQuantity" />
+
+    <label for="editExpiry">Expiry Date:</label>
+    <input type="date" id="editExpiry" />
+
+    <label for="editCategory">Category:</label>
+    <select id="editCategory">
+        <option value="fruits">🍎 Fruits</option>
+        <option value="vegetables">🥕 Vegetables</option>
+        <option value="dairy">🥛 Dairy</option>
+        <option value="meat">🍗 Meat</option>
+        <option value="beverages">🥤 Beverages</option>
+        <option value="others">🍽 Others</option>
+    </select>
+
+    <div class="dialog-buttons">
+      <button id="saveEdit">Save</button>
+      <button id="cancelEdit">Cancel</button>
+    </div>
+  </div>
+</div>
+
 
 </section>
     <!-- Footer -->
@@ -69,7 +100,33 @@
         loadAllItems();
     }
     }
+    // edit function : make a modal box in center of screen with prefilled data of the item to be edited , create a new div here 
+    function editItem(index)
+    {
+        const dialog = document.getElementById('editDialog');
+        const items = JSON.parse(localStorage.getItem('foodItems')) || [];
+        const item = items[index];
 
+        document.getElementById('editName').value = item.name;
+        document.getElementById('editQuantity').value = item.quantity;
+        document.getElementById('editExpiry').value = item.expiryDate;
+        document.getElementById('editCategory').value = item.category;
+        dialog.style.display = 'flex';
+        // Save button functionality
+        document.getElementById('saveEdit').onclick = function() {
+            item.name = document.getElementById('editName').value;
+            item.quantity = document.getElementById('editQuantity').value;
+            item.expiryDate = document.getElementById('editExpiry').value;
+            item.category = document.getElementById('editCategory').value;
+            localStorage.setItem('foodItems', JSON.stringify(items));
+            dialog.style.display = 'none';
+            loadAllItems();
+        };
+        // Cancel button functionality
+        document.getElementById('cancelEdit').onclick = function() {
+            dialog.style.display = 'none';
+        };
+    }
 
     // Function to load and display all food items
     function loadAllItems() {
@@ -120,6 +177,7 @@ if (statusClass === 'fresh') {
     <p>Quantity: ${item.quantity}</p>
     <p>Expiry Date: ${item.expiryDate}</p>
     <p><span class="status-dot ${dotClass}"></span>${statusText}</p>
+    <p>Notes: ${item.notes || 'N/A'}</p>
     <button onclick="editItem(${index})">Edit</button>
     <button onclick="deleteItem(${index})">Delete</button>
 `;
