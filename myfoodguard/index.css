@@ -131,19 +131,19 @@ a {
 }
 
 /* ===== STATISTICS SECTION ===== */
-.stats-section {
+.status-section {
   padding: 4rem 2rem;
   background-color: white;
   text-align: center;
 }
 
-.stats-section h2 {
+.status-section h2 {
   font-size: 2.5rem;
   margin-bottom: 3rem;
   color: #2d5016;
 }
 
-.stats-container {
+.status-container {
   display: flex;
   justify-content: center;
   gap: 2rem;
@@ -152,7 +152,7 @@ a {
   margin: 0 auto;
 }
 
-.stat-card {
+.status-card {
   background-color: #f0f8e8;
   padding: 2rem;
   border-radius: 10px;
@@ -162,42 +162,42 @@ a {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.stat-card:hover {
+.status-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
 }
 
-.stat-card.warning {
+.status-card.expiring {
   background-color: #fff3e0;
   border-left: 4px solid #ff9800;
 }
 
-.stat-card.danger {
+.status-card.expired {
   background-color: #ffebee;
   border-left: 4px solid #f44336;
 }
 
-.stat-icon {
+.status-icon {
   font-size: 2.5rem;
   margin-bottom: 1rem;
 }
 
-.stat-number {
+.status-number {
   font-size: 2.5rem;
   font-weight: bold;
   color: #2d5016;
   margin-bottom: 0.5rem;
 }
 
-.stat-card.warning .stat-number {
+.status-card.expiring .status-number {
   color: #ff9800;
 }
 
-.stat-card.danger .stat-number {
+.status-card.expired .status-number {
   color: #f44336;
 }
 
-.stat-label {
+.status-label {
   font-size: 1rem;
   color: #666;
   font-weight: 500;
@@ -382,33 +382,33 @@ a {
     max-width: 100%;
   }
 
-  .stats-section {
+  .status-section {
     padding: 2rem 1rem;
   }
 
-  .stats-section h2 {
+  .status-section h2 {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
   }
 
-  .stats-container {
+  .status-container {
     gap: 1rem;
   }
 
-  .stat-card {
+  .status-card {
     padding: 1.5rem;
     min-width: 100%;
   }
 
-  .stat-number {
+  .status-number {
     font-size: 2rem;
   }
 
-  .stat-icon {
+  .status-icon {
     font-size: 2rem;
   }
 
-  .stat-label {
+  .status-label {
     font-size: 0.9rem;
   }
 
@@ -502,18 +502,18 @@ a {
     font-size: 1rem;
   }
 
-  .stats-section h2,
+  .status-section h2,
   .features-section h2 {
     font-size: 1.8rem;
     margin-bottom: 2rem;
   }
 
-  .stat-card,
+  .status-card,
   .feature-card {
     min-width: 100%;
   }
 
-  .stat-number {
+  .status-number {
     font-size: 2.2rem;
   }
 
@@ -558,27 +558,27 @@ a {
     min-width: 100%;
   }
 
-  .stats-section {
+  .status-section {
     padding: 3rem 1.5rem;
   }
 
-  .stats-section h2,
+  .status-section h2,
   .features-section h2 {
     font-size: 2rem;
     margin-bottom: 2.5rem;
   }
 
-  .stats-container,
+  .status-container,
   .features-container {
     gap: 1.5rem;
   }
 
-  .stat-card,
+  .status-card,
   .feature-card {
     min-width: calc(50% - 0.75rem);
   }
 
-  .stat-number {
+  .status-number {
     font-size: 2.3rem;
   }
 
@@ -614,26 +614,26 @@ a {
     font-size: 1.1rem;
   }
 
-  .stats-section {
+  .status-section {
     padding: 3.5rem 2rem;
   }
 
-  .stats-section h2,
+  .status-section h2,
   .features-section h2 {
     font-size: 2.3rem;
   }
 
-  .stats-container,
+  .status-container,
   .features-container {
     gap: 1.8rem;
   }
 
-  .stat-card,
+  .status-card,
   .feature-card {
     min-width: calc(33.333% - 1.2rem);
   }
 
-  .stat-number {
+  .status-number {
     font-size: 2.4rem;
   }
 
@@ -666,21 +666,21 @@ a {
     font-size: 1.2rem;
   }
 
-  .stats-section {
+  .status-section {
     padding: 4rem 3rem;
   }
 
-  .stats-section h2,
+  .status-section h2,
   .features-section h2 {
     font-size: 2.5rem;
   }
 
-  .stats-container,
+  .status-container,
   .features-container {
     gap: 2rem;
   }
 
-  .stat-card,
+  .status-card,
   .feature-card {
     min-width: auto;
   }

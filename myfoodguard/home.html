@@ -6,8 +6,10 @@
     <title>FoodGuard - Reduce Food Waste</title>
     <link rel="stylesheet" href="index.css">
     <style>
-        /* Minimal styling for modal */
-        .notification-modal {
+
+       /* all styling of notification modal is done here */
+
+        .notificationModal {
             display: none;
             position: fixed;
             z-index: 200;
@@ -17,7 +19,7 @@
             justify-content: center;
             align-items: center;
         }
-        .notification-modal-content {
+        .notificationModal-content {
             background: #fff;
             padding: 1rem 2rem;
             border-radius: 10px;
@@ -27,7 +29,7 @@
             overflow-y: auto;
             position: relative;
         }
-        .notification-modal-header {
+        .notificationModal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -67,7 +69,7 @@
 </head>
 <body>
 
-    <!-- Navbar  -->
+    <!-- Navbar code  -->
     <nav class="navbar">
        <a href="home.html" class="logo">🥦 FoodGuard</a>
        <ul class="nav-links">
@@ -81,20 +83,20 @@
        </ul>    
     </nav>
 
-    <!-- Notification modal -->
-    <div class="notification-modal" id="notificationModal">
-        <div class="notification-modal-content">
-            <div class="notification-modal-header">
+    <!-- Notification Popup Modal-->
+    <div class="notificationModal" id="notificationModal">
+        <div class="notificationModal-content">
+            <div class="notificationModal-header">
                 <h3>Expiring Soon Items</h3>
                 <button class="close-modal" id="closeModal">&times;</button>
             </div>
             <div class="notification-list" id="notificationList">
-                <p class="no-notifications">No items expiring soon. Your fridge is fresh!</p>
+                <p class="no-notifications">No items are expiring soon in your fridge . Your fridge is fresh !!</p>
             </div>
         </div>
     </div>
 
-    <!-- Hero Section -->
+    <!-- Hero Part  -->
     <section class="hero">
         <div class="hero-content">
             <h1>Keep Your Fridge Fresh</h1>
@@ -106,38 +108,60 @@
         </div>
     </section>
 
-    <!-- Stats Section -->
-    <section class="stats-section">
-        <h2>Your Fridge Status</h2>
-        <div class="stats-container">
-            <div class="stat-card">
-                <div class="stat-icon">📦</div>
-                <div class="stat-number" id="total-items">0</div>
-                <div class="stat-label">Total Items</div>
+    <!-- Status section part  -->
+    <section class="status-section">
+        <h2>Your Fridge Status :</h2>
+        <div class="status-container">
+            <div class="status-card">
+                <div class="status-icon">📦</div>
+                <div class="status-number" id="total-items">0</div>
+                <div class="status-label">Total Items</div>
             </div>
-            <div class="stat-card warning">
-                <div class="stat-icon">⏰</div>
-                <div class="stat-number" id="expiring-soon">0</div>
-                <div class="stat-label">Expiring Soon</div>
+            <div class="status-card expiring">
+                <div class="status-icon">⏰</div>
+                <div class="status-number" id="expiring-soon">0</div>
+                <div class="status-label">Expiring Soon</div>
             </div>
-            <div class="stat-card danger">
-                <div class="stat-icon">❌</div>
-                <div class="stat-number" id="expired-items">0</div>
-                <div class="stat-label">Expired</div>
+            <div class="status-card expired">
+                <div class="status-icon">❌</div>
+                <div class="status-number" id="expired-items">0</div>
+                <div class="status-label">Expired</div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- my footer section part-->
     <footer class="footer">
-        <p>&copy; 2025 FoodGuard All rights reserved.</p>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>FoodGuard</h4>
+                <p>Your smart companion for managing food and reducing waste.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="add.html">Add Item</a></li>
+                    <li><a href="items.html">All Items</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>Email: info@FoodGuard.com</p>
+                <p>Phone: 8168258396</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 FoodGuard All rights reserved.</p>
+        </div>
     </footer>
 
     <script>
+        // here we are getting getting the info whether user is logged in or not  if not then redirect him to login page first to login first 
         const loggedInUser = localStorage.getItem('isLoggedIn');
         if (!loggedInUser) window.location.href = "index.html";
 
-        // Update dashboard stats
+        // updating dashboard status with real time fridge data from local storage ..
         function updateDashboardCards() {
             const userData = JSON.parse(localStorage.getItem(loggedInUser)) || {};
             const items = userData.foods || [];
@@ -159,14 +183,17 @@
             updateNotificationCount();
         }
 
-        // Get expiring items ignoring dismissed ones
+        // getting expiring items ignoring dismissed ones because if i use localStorage.removeItem then user will not be able to see them again in future if needed further . 
         function getExpiringItems() {
             const userData = JSON.parse(localStorage.getItem(loggedInUser)) || {};
             const items = userData.foods || [];
             const currentDate = new Date();
-            const dismissed = JSON.parse(localStorage.getItem(loggedInUser + '_dismissed')) || [];
+            const dismissed = JSON.parse(localStorage.getItem(loggedInUser + 'dismissedItems')) || [];
             const expiringItems = [];
 
+            // here expiryDate-currentDate gives us difference in milliseconds so we convert it to days by dividing with (1000*60*60*24)
+
+            // also !dismissed is used to avoid showing already dismissed items again in notification list if refresh happens somewhere as it was coming back from local storage again and again so resolved issue with this
             items.forEach(item => {
                 const expiryDate = new Date(item.expiryDate);
                 const daysDiff = (expiryDate - currentDate) / (1000 * 60 * 60 * 24);
@@ -184,12 +211,13 @@
             document.getElementById('notif-count').innerText = expiringItems.length;
         }
 
+        // extracting  items which are expiring soon to show their notifications 
         function displayNotifications() {
             const expiringItems = getExpiringItems();
             const notificationList = document.getElementById('notificationList');
 
             if (expiringItems.length === 0) {
-                notificationList.innerHTML = '<p class="no-notifications">No items expiring soon. Your fridge is fresh!</p>';
+                notificationList.innerHTML = '<p class="no-notifications">No items are expiring soon in your fridge . Your fridge is fresh !!</p>';
                 return;
             }
 
@@ -205,16 +233,17 @@
             `).join('');
         }
 
+        // dimissing notification by adding them in dismissed list in local storage
         function dismissNotification(index) {
             const expiringItems = getExpiringItems();
             if (!expiringItems[index]) return;
 
-            const dismissedKey = loggedInUser + '_dismissed';
+            const dismissedKey = loggedInUser + 'dismissedItems';
             let dismissed = JSON.parse(localStorage.getItem(dismissedKey)) || [];
             dismissed.push(expiringItems[index].name);
             localStorage.setItem(dismissedKey, JSON.stringify(dismissed));
 
-            displayNotifications(); // update modal
+            displayNotifications(); 
             updateNotificationCount();
         }
 
@@ -232,7 +261,7 @@
             if (event.target === modal) modal.style.display = 'none';
         });
 
-        // Load on page load
+        // loading real time data when page gets loaded
         window.onload = updateDashboardCards;
     </script>
 </body>
