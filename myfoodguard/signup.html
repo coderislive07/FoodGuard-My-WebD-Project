@@ -30,7 +30,7 @@
     </div>
 
     <script>
-               <!-- if user is not logged in show login form else redirect to home page -->
+            //    <!-- if user is not logged in show login form else redirect to home page -->
       const loggedInUser = localStorage.getItem('isLoggedIn');
         if(loggedInUser) {
         window.location.href = "home.html";
@@ -45,7 +45,7 @@
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
 
-            // Validation
+            // basic validations added 
             if(password !== confirmPassword) {
                 alert("Passwords do not match!");
                 return;
@@ -55,7 +55,7 @@
                 alert("Email already registered!");
                 return;
             }
-
+            
             if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
                 alert("Invalid email format!");
                 return;

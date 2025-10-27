@@ -29,7 +29,7 @@
     </div>
 
     <script>
-        <!-- if user is not logged in show login form else redirect to home page -->
+        // <!-- if user is not logged in show login form else redirect to home page -->
       
         const loggedInUser = localStorage.getItem('isLoggedIn');
         if(loggedInUser) {
@@ -47,17 +47,17 @@
             const user = JSON.parse(localStorage.getItem(email));
 
             if(!user) {
-                alert("No account found with this email!");
+                alert("No account found with this email!!");
                 return;
             }
 
             if(user.password !== password) {
-                alert("Incorrect password!");
+                alert("Incorrect password!!");
                 return;
             }
 
             alert(`Welcome back, ${user.name}!`);
-            // Redirect to home page
+            // redirecting  to home page
             localStorage.setItem('isLoggedIn',email );
             window.location.href = "home.html";
         });

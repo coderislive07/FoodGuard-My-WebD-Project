@@ -78,7 +78,7 @@
             <li><a href="allitems.html">📋 All Items</a></li>
             <li><a href="settings.html">⚙️ Settings</a></li>
             <div style="cursor: pointer;" class="notification-bell" id="notificationBell">
-                🔔 <span class="notif-count" id="notif-count">0</span>
+                🔔 <span class="notification-count" id="notification-count">0</span>
             </div>
        </ul>    
     </nav>
@@ -208,7 +208,7 @@
 
         function updateNotificationCount() {
             const expiringItems = getExpiringItems();
-            document.getElementById('notif-count').innerText = expiringItems.length;
+            document.getElementById('notification-count').innerText = expiringItems.length;
         }
 
         // extracting  items which are expiring soon to show their notifications 

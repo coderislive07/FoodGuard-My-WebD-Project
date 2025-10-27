@@ -64,7 +64,7 @@ a {
   color: #fff;
 }
 
-.hamburger {
+.threeBars {
   display: none;
   font-size: 1.8rem;
   cursor: pointer;
@@ -286,7 +286,7 @@ a {
   margin-bottom: 0.5rem;
   opacity: 0.9;
 }
-.notif-count
+.notification-count
     {
     background-color: red;
     color: white;
@@ -338,7 +338,7 @@ a {
     font-size: 1.1rem;
     gap: 0.3rem;
   }
-  .hamburger {
+  .threeBars {
     display: block;
   }
 
@@ -704,20 +704,20 @@ a {
   margin-bottom: 2rem;
 }
 
-.form-group {
+.addItemsForm {
   margin-bottom: 1.5rem;
 }
 
-.form-group label {
+.addItemsForm label {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 600;
   color: #333;
 }
 
-.form-group input,
-.form-group select,
-.form-group textarea {
+.addItemsForm input,
+.addItemsForm select,
+.addItemsForm textarea {
   width: 100%;
   padding: 0.8rem;
   border-radius: 6px;
@@ -725,9 +725,9 @@ a {
   transition: border-color 0.3s;
 }
 
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
+.addItemsForm input:focus,
+.addItemsForm select:focus,
+.addItemsForm textarea:focus {
   border-color: #2d5016;
   outline: none;
 }
@@ -1085,7 +1085,7 @@ a {
   font-size: 1rem;
 }
 
-.notif-count {
+.notification-count {
 
   top: -8px;
   right: -8px;

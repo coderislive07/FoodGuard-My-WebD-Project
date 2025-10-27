@@ -7,9 +7,11 @@
       <link rel="stylesheet" href="index.css">
 </head>
 <body>
+
+  <!-- navbar section  -->
        <nav class="navbar">
             <a href = "index.html"> <div class="logo">🥦 FoodGuard</div></a>
-          <div class="hamburger" id="hamburger">
+          <div class="threeBars" id="threeBars">
     ☰
   </div>
         <ul class="nav-links">
@@ -19,20 +21,22 @@
       <li><a href="settings.html">⚙️ Settings</a></li>
         <div class="notification-bell" id="notificationBell">
     🔔
-    <span class="notif-count">0</span>
+    <span class="notification-count">0</span>
   </div>
         </ul>
         
     </nav>
+
+    <!-- add items form  -->
     <section class="add-item-section">
-  <h1>Add / Edit Food Item</h1>
+  <h1>Add Food Items</h1>
   <form class="add-item-form" id="addItemForm">
-    <div class="form-group">
+    <div class="addItemsForm">
       <label for="itemName">Item Name</label>
-      <input type="text" id="itemName" placeholder="e.g., Milk, Apples, Cheese" required />
+      <input type="text" id="itemName" placeholder="e.g. Milk,Mangoes,Apples" required />
     </div>
 
-    <div class="form-group">
+    <div class="addItemsForm">
       <label for="category">Category</label>
       <select id="category" required>
         <option value="">Select Category</option>
@@ -45,17 +49,17 @@
       </select>
     </div>
 
-    <div class="form-group">
+    <div class="addItemsForm">
       <label for="quantity">Quantity</label>
-      <input type="number" id="quantity" min="1" placeholder="e.g., 2" required />
+      <input type="number" id="quantity" min="1" placeholder="e.g. 2" required />
     </div>
 
-    <div class="form-group">
+    <div class="addItemsForm">
       <label for="expiryDate">Expiry Date</label>
       <input type="date" id="expiryDate" required />
     </div>
 
-    <div class="form-group">
+    <div class="addItemsForm">
       <label for="status">Status</label>
       <select id="status">
         <option value="fresh">🟢 Fresh</option>
@@ -64,15 +68,15 @@
       </select>
     </div>
 
-    <div class="form-group">
+    <div class="addItemsForm">
       <label for="notes">Notes (optional)</label>
-      <textarea id="notes" placeholder="Add notes or storage tips..."></textarea>
+      <textarea id="notes" placeholder="Add notes regarding food item..."></textarea>
     </div>
 
     <button type="submit" class="btn-submit">Save Item</button>
   </form>
 </section>
-<!-- Footer -->
+<!-- footer part -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
@@ -98,6 +102,7 @@
         </div>
     </footer>
     <script>
+             // here we are getting getting the info whether user is logged in or not  if not then redirect him to login page first to login first 
           const loggedInUser = localStorage.getItem('isLoggedIn').trim();
         if(!loggedInUser) {
         window.location.href = "index.html";
@@ -107,9 +112,11 @@
     
     const category = document.getElementById('category');
     const quantity = document.getElementById('quantity');
-    quantity.max = 1000; // set maximum quantity to 1000
+
+    // .max is used to set the maximum value to be allow to filled 
+    quantity.max = 1000; 
     const expiryDate = document.getElementById('expiryDate');
-    // dont let user  choose the expiry date before current day 
+    // dont let user  choose the expiry date before current date 
       expiryDate.min = new Date().toISOString().split("T")[0];
     const status = document.getElementById('status');
     const notes = document.getElementById('notes');
